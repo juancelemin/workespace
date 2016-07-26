@@ -1,0 +1,293 @@
+import java.util.ArrayList;
+
+public class BFS {
+
+	public BFS() {
+
+	}
+
+	public String pathBFS(Graph v, int nodeStart, int nodeEnd) {
+
+		ArrayList<Integer> stack = new ArrayList<>();
+		int[] distance = new int[v.getnumberNode()];
+		int[] predecessor = new int[v.getnumberNode()];
+		boolean[] visited = new boolean[v.getnumberNode()];
+		int nodeActual = nodeStart;
+
+		visited[nodeStart] = true;
+		stack.add(nodeStart);
+		distance[nodeStart] = 0;
+		predecessor[nodeStart] = 0;
+
+		while (!stack.isEmpty()) {
+			nodeActual = stack.get(0);
+			stack.remove(0);
+			// System.out.print(nodeStart + " ");
+			for (int i = 0; i < visited.length; i++) {
+				if (v.getadjacencyMatrix()[nodeActual][i] == 1 && !visited[i]) {
+					visited[i] = true;
+					distance[i] = distance[nodeActual] + 1;
+					predecessor[i] = nodeActual;
+					stack.add(i);
+				}
+			}
+		}
+		String path = "";
+		while (nodeEnd != nodeStart) {
+			path = nodeEnd + " " + path;
+			nodeEnd = predecessor[nodeEnd];
+		}
+		return nodeStart + " " + path;
+	}
+
+	public int[] pathDFS(Graph v, int Nodestart, int NodeEnd, boolean[] visited, int[] distance) {
+
+		if (!visited[Nodestart]) {
+			visited[Nodestart] = true;
+
+			System.out.print(Nodestart + " ");
+
+			for (int i = 0; i < visited.length; i++) {
+				if (v.getadjacencyMatrix()[Nodestart][i] == 1 && !visited[i]) {
+					distance[i] = distance[Nodestart] + 1;
+					pathDFS(v, i, NodeEnd, visited, distance);
+				}
+
+			}
+		}
+
+		return distance;
+
+	}
+
+	public String pathFord(Graph v, int nodeStart, int nodeEnd) {
+		int[] predecessor = new int[v.getnumberNode()];
+		int[] distance = new int[v.getnumberNode()];
+		for (int i = 0; i < predecessor.length; i++) {
+			if (i != nodeStart) {
+				distance[i] = Integer.MAX_VALUE - 1;
+
+			}
+
+		}
+		for (int k = 0; k < v.getnumberNode(); k++) {
+			for (int i = 0; i < v.getnumberNode(); i++) {
+				for (int j = 0; j < v.getnumberNode(); j++) {
+					if (v.getadjacencyMatrix()[i][j] == 1) {
+						if (distance[j] > distance[i] + 1) {
+
+							distance[j] = distance[i] + 1;
+							predecessor[j] = i;
+
+						}
+					}
+				}
+			}
+
+		}
+		String path = "";
+		while (nodeEnd != nodeStart) {
+			path = nodeEnd + " " + path;
+			nodeEnd = predecessor[nodeEnd];
+		}
+		return nodeStart + " " + path;
+	}
+
+	public String pathDijkstra(Graph v, int nodeStart, int nodeEnd) {
+		int[] predecessor = new int[v.getnumberNode()];
+		boolean[] visited = new boolean[v.getnumberNode()];
+		int[] distance = new int[v.getnumberNode()];
+		int vertex ;
+		for (int i = 0; i < distance.length; i++) {
+			if (i == nodeStart) {
+				predecessor[nodeStart] = nodeStart;
+			} else if (v.getadjacencyMatrix()[nodeStart][i] == 1) {
+				distance[i] = 1;
+			} else {
+				distance[i] = Integer.MAX_VALUE - 1;
+			}
+		}
+		visited[nodeStart] = true;
+
+		while (!isAll(visited)) {
+
+			vertex = lessVertex(visited, distance);
+			visited[vertex] = true;
+			for (int i = 0; i < distance.length; i++) {
+
+				if (v.getadjacencyMatrix()[vertex][i] == 1) {
+
+					if (distance[i] > distance[vertex] + 1) {
+						distance[i] = distance[vertex] + 1;
+						predecessor[i] = vertex;
+					}
+				}
+			}
+		}
+		System.out.println(nodeStart);
+		String path = "";
+		while (nodeEnd != nodeStart) {
+			path = nodeEnd + " " + path;
+			nodeEnd = predecessor[nodeEnd];
+		}
+		path = nodeStart + " " + path;
+		// for (int i = 0; i < predecessor.length; i++) {
+		// System.out.println(predecessor[i] + " ");
+		// }
+		return path;
+	}
+
+	private boolean isAll(boolean[] visited) {
+		boolean answer = true;
+		for (boolean node : visited) {
+			if (node == false) {
+				answer = false;
+				break;
+			}
+		}
+		return answer;
+	}
+
+	private int lessVertex(boolean[] visited, int[] distance) {
+		int vertex = 0;
+		int less = 0;
+		for (int i = 0; i < visited.length; i++) {
+			if (!visited[i]) {
+				vertex = i;
+				break;
+			}
+		}
+		for (int i = 0; i < distance.length; i++) {
+			if (!visited[i]) {
+				less = vertex;
+				vertex = i;
+				if (distance[less] < distance[vertex]) {
+					vertex = less;
+				}
+			}
+		}
+		return vertex;
+	}
+
+	public String pathDijkstraPriorityQueue(Graph v, int nodeStart, int nodeEnd) {
+		int[] predecessor = new int[v.getnumberNode()];
+		boolean[] visited = new boolean[v.getnumberNode()];
+		int[] distance = new int[v.getnumberNode()];
+		ArrayList<Integer> queue = new ArrayList<>();
+
+		int vertex = 0;
+		for (int i = 0; i < distance.length; i++) {
+			if (i == nodeStart) {
+				predecessor[nodeStart] = nodeStart;
+			} else {
+				distance[i] = Integer.MAX_VALUE - 1;
+			}
+		}
+
+		queue.add(nodeStart);
+		while (!queue.isEmpty()) {
+			vertex = queue.get(lessVertex(queue, distance));
+			queue.remove(lessVertex(queue, distance));
+			visited[nodeStart] = true;
+			for (int i = 0; i < v.getnumberNode(); i++) {
+				if (!visited[i] && v.getadjacencyMatrix()[vertex][i] == 1) {
+					if (distance[i] > distance[vertex] + 1) {
+						distance[i] = distance[vertex] + 1;
+						predecessor[i] = vertex;
+						queue.add(i);
+					}
+				}
+			}
+
+		}
+		String path = "";
+		while (nodeEnd != nodeStart) {
+			path = nodeEnd + " " + path;
+			nodeEnd = predecessor[nodeEnd];
+		}
+		return nodeStart + " " + path;
+
+	}
+
+	private int lessVertex(ArrayList<Integer> queue, int[] distance) {
+		int vertex = 0;
+
+		for (int i = 0; i < queue.size(); i++) {
+			if (distance[queue.get(i)] < distance[queue.get(vertex)]) {
+				vertex = i;
+			}
+
+		}
+
+		return vertex;
+	}
+
+	public String PathFloydWarshall(Graph v, int StratNode, int EndNode) {
+		int dist[][] = new int[v.getnumberNode()][v.getnumberNode()];
+		int next[][] = new int[v.getnumberNode()][v.getnumberNode()];
+		for (int i = 0; i < dist.length; i++) {
+			for (int j = 0; j < dist.length; j++) {
+				if (i == j) {
+
+				} else {
+					dist[i][j] = Integer.MAX_VALUE;
+				}
+			}
+		}
+		for (int i = 0; i < dist.length; i++) {
+			for (int j = 0; j < dist.length; j++) {
+				if (v.getadjacencyMatrix()[i][j] == 1) {
+					dist[i][j] = 1;
+					next[i][j] = j;
+				}
+			}
+		}
+		for (int k = 0; k < dist.length; k++) {
+			for (int i = 0; i < dist.length; i++) {
+				for (int j = 0; j < dist.length; j++) {
+					if (dist[i][k] == Integer.MAX_VALUE || dist[k][j] == Integer.MAX_VALUE) {
+					} else if (dist[i][j] > dist[i][k] + dist[k][j]) {
+						dist[i][j] = dist[i][k] + dist[k][j];
+						next[i][j] = next[i][k];
+					}
+				}
+			}
+		}
+		int u = StratNode;
+		String path = "";
+		while (u != EndNode) {
+			u = next[u][EndNode];
+			path = path + " " + u;
+		}
+		path = StratNode + path;
+		return path;
+	}
+
+	public void DFSStack(Graph v, int StratNode, int EndNode) {
+
+		ArrayList<Integer> stack = new ArrayList<>();
+		boolean visited[] = new boolean [v.getnumberNode()];  
+		
+		stack.add(StratNode);
+		visited[StratNode] = true;
+		int u = 0;
+		while (!stack.isEmpty()) {
+			u = stack.get(0);
+			stack.remove(0);
+			visited[u] = true;
+			System.out.print(u+ " ");
+			for (int i = v.getnumberNode()-1; i > 0; i-- ) {
+				if(v.getadjacencyMatrix()[u][i] == 1 && !visited[i]){
+					
+					stack.add(0,i);
+					
+				}
+			}
+			
+			
+		}
+		
+		
+	}
+
+}

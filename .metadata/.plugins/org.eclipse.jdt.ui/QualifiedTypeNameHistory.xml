@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.Object"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="Mancala"/>
+<fullyQualifiedTypeName name="java.time.temporal.JulianFields"/>
+<fullyQualifiedTypeName name="Partida"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="Node"/>
+<fullyQualifiedTypeName name="BFS"/>
+<fullyQualifiedTypeName name="java.lang.StackOverflowError"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="HostingPlanManager"/>
+<fullyQualifiedTypeName name="HostingPlanKit"/>
+<fullyQualifiedTypeName name="HostingPlan"/>
+<fullyQualifiedTypeName name="java.lang.CloneNotSupportedException"/>
+<fullyQualifiedTypeName name="example2.AccountManager"/>
+<fullyQualifiedTypeName name="example2.AccountPrototypeFactory"/>
+<fullyQualifiedTypeName name="example2.UserAccount"/>
+<fullyQualifiedTypeName name="Ford"/>
+<fullyQualifiedTypeName name="Dijkstra"/>
+<fullyQualifiedTypeName name="DijkstraPriorityQueue"/>
+<fullyQualifiedTypeName name="FloydWarshall"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="javax.swing.text.StyledEditorKit.ForegroundAction"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.PRIVATE_MEMBER"/>
+<fullyQualifiedTypeName name="Carrera"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.PUBLIC_MEMBER"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
+<fullyQualifiedTypeName name="parcial.Candys"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="Graph"/>
+<fullyQualifiedTypeName name="CreateGraph"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="DFSWithStack"/>
+</qualifiedTypeNameHistroy>

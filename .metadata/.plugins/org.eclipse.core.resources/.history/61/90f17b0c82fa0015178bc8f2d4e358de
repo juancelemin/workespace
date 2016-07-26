@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+
+public class BFS {
+
+	public BFS() {
+
+	}
+
+	public String pathBFS(Graph v, int nodeStart, int nodeEnd) {
+
+		ArrayList<Integer> stack = new ArrayList<>();
+		int[] distance = new int[v.getnumberNode()];
+		int[] father = new int[v.getnumberNode()];
+		boolean[] visited = new boolean[v.getnumberNode()];
+
+		visited[nodeStart] = true;
+		stack.add(nodeStart);
+		distance[nodeStart] = 0;
+		father[nodeStart] = 0;
+
+		while (!stack.isEmpty()) {
+			nodeStart = stack.get(0);
+			stack.remove(0);
+			// System.out.print(nodeStart + " ");
+			for (int i = 0; i < visited.length; i++) {
+				if (v.getadjacencyMatrix()[nodeStart][i] == 1 && !visited[i]) {
+					visited[i] = true;
+					distance[i] = distance[nodeStart] + 1;
+					father[i] = nodeStart;
+					stack.add(i);
+				}
+			}
+		}
+		String path = "";
+		while (nodeEnd != 0) {
+			path = nodeEnd + " " + path;
+			nodeEnd = father[nodeEnd];
+		}
+		return 0 + " " + path;
+	}
+
+	public int [] pathDFS(Graph v, int Nodestart, int NodeEnd, boolean[] visited,int[] distance,int father) {
+
+		if (!visited[Nodestart]) {
+			visited[Nodestart] = true;
+			
+			//System.out.print(Nodestart + " ");
+			for (int i = 0; i < visited.length; i++) {
+				if (v.getadjacencyMatrix()[Nodestart][i] == 1 && !visited[i]) {
+					
+					pathDFS(v, i, NodeEnd, visited, distance[Nodestart]+1);
+				}
+
+			}
+		}
+		return distance;
+
+	}
+
+}

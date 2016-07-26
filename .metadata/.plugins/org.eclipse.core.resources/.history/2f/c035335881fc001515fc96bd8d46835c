@@ -1,0 +1,72 @@
+import java.util.Random;
+import java.util.Stack;
+
+public class CreateGraph {
+
+	public static void main(String[] args) {
+
+		// CreateGraph p = new CreateGraph();
+		//
+		// p.getRandomGraph(6, 0).toTxt();
+		Graph p = new Graph(9);
+		p.addEdge(0, 1);
+		p.addEdge(0, 8);
+		p.addEdge(8, 2);
+		p.addEdge(8, 6);
+		p.addEdge(2, 3);
+		p.addEdge(2, 4);
+		p.addEdge(2, 5);
+		p.addEdge(5, 6);
+		p.addEdge(4, 7);
+		p.addEdge(7, 6);
+		p.addEdge(6, 8);
+
+//		DFS n = new DFS();
+//		n.algorithmDFS(p, 0, 7, d);
+//		n.searchPath(7);
+		BFS s = new BFS();
+		//ystem.out.println(s.pathBFS(p,7, 1));
+		//System.out.println(s.pathFord(p, 6, 4));
+		//System.out.println(s.pathDijkstra(p, 8, 0));
+		//System.out.println(s.pathDijkstraPriorityQueue(p, 6, 4));
+		//System.out.println(s.PathFloydWarshall(p, 7, 1));
+		s.DFSStack(p, 0, 0);
+		System.out.println();
+		Stack<Integer> f = new Stack<>();
+		f.push(5);
+		f.push(2);
+		f.push(3);
+		f.push(4);
+		f.push(1);
+		for (int i = 0; i < f.size(); i++) {
+			System.out.println(f.get(i));
+		}
+		//s.pathDFS(p, 0, 0, new boolean [9],new int [9]);
+	}
+
+
+
+	public int getRandomNumber(int max) {
+		int number = 0;
+		Random rnd = new Random();
+		number = (int) (rnd.nextDouble() * (max + 1));
+		return number;
+	}
+
+	public Graph getRandomGraph(int n, double p) {
+
+		Graph newGraph = new Graph(n);
+		int a = 0;
+		int b = 0;
+		for (int i = 0; i < n; i++) {
+			a = getRandomNumber(n - 1);
+			b = getRandomNumber(n - 1);
+			if (a != b) {
+				newGraph.addEdge(a, b);
+				newGraph.addEdge(b, a);
+			}
+		}
+
+		return newGraph;
+	}
+}

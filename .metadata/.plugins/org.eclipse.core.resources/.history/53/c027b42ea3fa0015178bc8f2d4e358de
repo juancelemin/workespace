@@ -1,0 +1,91 @@
+import java.util.ArrayList;
+
+import javax.print.attribute.standard.PDLOverrideSupported;
+
+public class BFS {
+
+	public BFS() {
+
+	}
+
+	public String pathBFS(Graph v, int nodeStart, int nodeEnd) {
+
+		ArrayList<Integer> stack = new ArrayList<>();
+		int[] distance = new int[v.getnumberNode()];
+		int[] predecessor = new int[v.getnumberNode()];
+		boolean[] visited = new boolean[v.getnumberNode()];
+
+		visited[nodeStart] = true;
+		stack.add(nodeStart);
+		distance[nodeStart] = 0;
+		predecessor[nodeStart] = 0;
+
+		while (!stack.isEmpty()) {
+			nodeStart = stack.get(0);
+			stack.remove(0);
+			// System.out.print(nodeStart + " ");
+			for (int i = 0; i < visited.length; i++) {
+				if (v.getadjacencyMatrix()[nodeStart][i] == 1 && !visited[i]) {
+					visited[i] = true;
+					distance[i] = distance[nodeStart] + 1;
+					predecessor[i] = nodeStart;
+					stack.add(i);
+				}
+			}
+		}
+		String path = "";
+		while (nodeEnd != 0) {
+			path = nodeEnd + " " + path;
+			nodeEnd = predecessor[nodeEnd];
+		}
+		return 0 + " " + path;
+	}
+
+	public int[] pathDFS(Graph v, int Nodestart, int NodeEnd, boolean[] visited, int[] distance) {
+
+		if (!visited[Nodestart]) {
+			visited[Nodestart] = true;
+
+			// System.out.print(Nodestart + " ");
+			for (int i = 0; i < visited.length; i++) {
+				if (v.getadjacencyMatrix()[Nodestart][i] == 1 && !visited[i]) {
+					distance[i] = distance[Nodestart] + 1;
+					pathDFS(v, i, NodeEnd, visited, distance);
+				}
+
+			}
+		}
+
+		return distance;
+
+	}
+
+	public void pathFord(Graph v, int NodeStart, int NodeEnd) {
+		int[] predecessor = new int[v.getnumberNode()];
+		int[] distance = new int[v.getnumberNode()];
+		for (int i = 0; i < predecessor.length; i++) {
+			if (i != NodeStart) {
+				distance[i] = Integer.MAX_VALUE -1;
+				
+			}
+			
+			System.out.println(distance[i] );
+		}
+			for (int i = 0; i < v.getnumberNode(); i++) {
+				for (int j = 0; j < v.getnumberNode(); j++) {
+					if (v.getadjacencyMatrix()[i][j] == 1) {
+						if (distance[j] > distance[i] + 1) {
+							
+							distance[j] = distance[i] + 1;
+							predecessor[j] = i;
+							
+						}
+					}
+				
+			}
+			//	System.out.print(distance[i] + " ");
+		}
+		
+	}
+
+}
