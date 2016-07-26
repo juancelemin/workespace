@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=newColor
+comment0.target=void\ changeColor(java.lang.String)
+comment1.params=distance
+comment1.target=void\ slowMoveHorizontal(int)
+comment2.params=
+comment2.target=void\ draw()
+numComments=3
